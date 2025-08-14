@@ -27,6 +27,27 @@
   - title/subtitle → <flux:heading> with appropriate sizes
   - Error messages → <flux:text variant="danger">
 
+  FluxUI Attribute Binding Best Practice:
+
+  Instead of using Blade directives in attributes:
+  class="@if ($condition) some-classes @endif"
+
+  Use Laravel's attribute binding syntax with ternary operators:
+  :class="$condition ? 'some-classes' : ''"
+  :title="$condition ? 'Some title' : ''"
+
+  Why this is better:
+  1. Cleaner syntax - More readable and less verbose
+  2. Proper binding - Uses Laravel's native attribute binding (:attribute)
+  3. Avoids parsing issues - Prevents Blade directive conflicts within HTML attributes
+  4. FluxUI compatible - Flux components are designed to work with Laravel's binding syntax
+  5. More maintainable - Ternary operators are easier to debug than nested Blade directives
+
+  Key pattern to remember:
+  - Use :attribute="expression" for dynamic values
+  - Use ternary operators condition ? 'value-if-true' : 'value-if-false' for conditional content
+  - This applies to all attributes: :class, :title, :disabled, :href, etc.
+
   UI Refinements:
   - Delete buttons: Make icon-only with icon="trash", variant="danger", size="sm", inset="top bottom" - remove text to be less
   aggressive
@@ -58,6 +79,7 @@
   - Forms follow FluxUI patterns
   - Error handling displays properly
   - Layout feels balanced (not too wide or narrow)
+  - Make sure all 'plain' blade templates (ie, not livewire components) are updated to use `<x-layouts.app>` rather than the older @extends and @section('content') syntax we used to use
 
   Approach: Work through templates systematically, test functionality after each conversion, and iterate on spacing/sizing based
    on visual feedback. Follow FluxUI documentation patterns exactly, and prioritize user experience improvements where possible.
